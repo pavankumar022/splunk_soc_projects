@@ -19,20 +19,7 @@ This portfolio demonstrates the design, deployment, and operation of a Security 
 ### 1. Lab Architecture & Data Pipeline
 The security pipeline utilizes a physical victim machine forwarding telemetry to a virtualized Splunk SIEM instance.
 
-```mermaid
-graph LR
-    subgraph Victim Endpoint [Windows Host: BATMAN]
-        A[Windows Security Logs] --> C[Splunk Universal Forwarder]
-        B[Sysmon Operational Logs] --> C
-    end
-    subgraph Attacker [Kali Linux VM]
-        D[Credential Simulation / SMB Loop] -.->|Generates 4625 Events| Victim Endpoint
-    end
-    subgraph SIEM [Splunk Enterprise: Ubuntu VM]
-        C -->|TCP 9997 Forward| E[(Splunk Indexer)]
-        E --> F[Detection Queries / SPL]
-    end
-```
+
 
 * **Windows Host (BATMAN):** Monitored workstation running Sysmon (configured with SwiftOnSecurity baseline) and Splunk Universal Forwarder.
 * **Splunk Enterprise (Ubuntu Server VM):** Receives forwarded logs on TCP 9997, indexes data, and runs search operations.
